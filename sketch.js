@@ -9,27 +9,52 @@
 // o menino que descobriu o vento, 14, drama
 
 let campoIdade;
+let campoFantasia;
 
 function setup() {
-  createCanvas(400, 400);
-  campoIdade = createInput("15");
+  createCanvas(800, 400);
+  createElement("h2", "Recomendador de filmes");
+  createSpan("Sua idade:");
+  campoIdade = createInput("5");
+  campoFantasia = createCheckbox("Gosta de fantasia?");
 }
 
 function draw() {
-  background(220);
-  let idade = 15; // exemplo de idade
-  let recomendacao = geraRecomendacao(idade);
+  background("white");
+  let idade = campoIdade.value();
+  let gostaDeFantasia = campoFantasia.checked();
+  let recomendacao = geraRecomendacao(idade, gostaDeFantasia);
+
+  fill(color(76, 0, 115));
+  textAlign(CENTER, CENTER);
+  textSize(38);
   text(recomendacao, width / 2, height / 2);
 }
 
-function geraRecomendacao(idade) {
+function geraRecomendacao(idade, gostaDeFantasia, gostaDeAventura) {
   if (idade >= 10) {
     if (idade >= 14) {
       return "O menino que descobriu o vento";
     } else {
-      return "As aventuras de Pi";
+      if (idade >= 12) {
+        if(gostaDeFantasia || gostaDeAventura) {
+          return "Homem aranha: no aranhaverso";          
+        } else{
+         return "Ladrões de bicicleta";
+        }
+      } else {
+        if (gostaDeFantasia) {
+          return "As aventuras de pi";
+        } else {
+          return "Depois da chuva";
+        }
+      }
     }
   } else {
-    return "A viagem de Chihiro";
+    if (gostaDeFantasia) {
+      return "A viagem de chihiro";
+    } else {
+      return "O feitiço do tempo";
+    }
   }
 }
